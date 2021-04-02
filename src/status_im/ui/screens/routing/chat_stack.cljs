@@ -19,7 +19,8 @@
             [status-im.ui.screens.profile.group-chat.views :as profile.group-chat]
             [status-im.ui.components.tabbar.styles :as tabbar.styles]
             [status-im.ui.screens.stickers.views :as stickers]
-            [status-im.ui.screens.notifications-center.views :as notifications-center]))
+            [status-im.ui.screens.notifications-center.views :as notifications-center]
+            [status-im.ui.screens.chat.pinned-messages :as pinned-messages]))
 
 (defonce stack (navigation/create-stack))
 (defonce group-stack (navigation/create-stack))
@@ -35,6 +36,8 @@
      :component referrals.public-chat/view}
     {:name      :chat
      :component chat/chat}
+    {:name      :chat-pinned-messages
+     :component pinned-messages/pinned-messages}
     {:name      :group-chat-profile
      :insets    {:top false}
      :component profile.group-chat/group-chat-profile}
