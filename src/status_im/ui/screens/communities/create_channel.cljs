@@ -46,7 +46,6 @@
 (defn view []
   (let [{:keys [name description]} (<sub [:communities/create-channel])]
     [:<>
-     [topbar/topbar {:title (i18n/label :t/create-channel-title)}]
      [form]
      [toolbar/toolbar
       {:show-border? true
