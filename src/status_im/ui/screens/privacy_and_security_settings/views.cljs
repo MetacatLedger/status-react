@@ -2,6 +2,7 @@
   (:require [re-frame.core :as re-frame]
             [status-im.i18n.i18n :as i18n]
             [quo.core :as quo]
+            [status-im.multiaccounts.reset-password.core :as reset-password]
             [status-im.ui.components.colors :as colors]
             [status-im.ui.components.common.common :as components.common]
             [status-im.ui.components.react :as react]
@@ -42,14 +43,6 @@
           :on-press            #(re-frame/dispatch [:multiaccounts.ui/biometric-auth-switched
                                                     ((complement boolean) (= auth-method "biometric"))])}])
       [separator]
-      ;; TODO - uncomment when implemented
-      ;; {:size       :small
-      ;;  :title       (i18n/label :t/change-password)
-      ;;  :chevron true}
-      ;; {:size                   :small
-      ;;  :title                   (i18n/label :t/change-passcode)
-      ;;  :chevron true}
-
       [quo/list-header (i18n/label :t/privacy)]
       [quo/list-item {:size                :small
                       :title               (i18n/label :t/set-dapp-access-permissions)
@@ -86,6 +79,14 @@
                         :chevron             true
                         :on-press            #(re-frame/dispatch [:navigate-to :anonymous-metrics-settings])
                         :accessibility-label :anonymous-usage-data}])
+      [quo/list-item {:size                :small
+                      :title               (i18n/label :t/reset-password)
+                      :chevron             true
+                      :accessory           :text
+                      :on-press            #(do
+                                              (re-frame/dispatch [::reset-password/clear-form-vals])
+                                              (re-frame/dispatch [:navigate-to :reset-password]))
+                      :accessibility-label :reset-password}]
       (when platform/android?
         [quo/list-item {:size               :small
                         :title              (i18n/label :t/webview-camera-permission-requests)

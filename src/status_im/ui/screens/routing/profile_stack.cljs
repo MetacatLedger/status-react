@@ -29,6 +29,7 @@
             [status-im.ui.screens.default-sync-period-settings.view
              :as
              default-sync-period-settings]
+            [status-im.ui.screens.reset-password.views :as reset-password]
             [status-im.ui.screens.network.edit-network.views :as edit-network]
             [status-im.ui.screens.network.views :as network]
             [status-im.ui.screens.network.network-details.views :as network-details]
@@ -87,6 +88,8 @@
      :component link-previews-settings/link-previews-settings}
     {:name      :anonymous-metrics-settings
      :component anonymous-metrics-settings/settings}
+    {:name      :reset-password
+     :component reset-password/reset-password}
     {:name      :privacy-and-security
      :component privacy-and-security/privacy-and-security}
     {:name      :messages-from-contacts-only
