@@ -26,9 +26,9 @@
 
 (fx/defn initialize-views
   {:events [::initialize-view]}
-  [cofx {:keys [logout?]}]
+  [cofx]
   (let [{{:multiaccounts/keys [multiaccounts]} :db} cofx]
-    (if (and (seq multiaccounts) (not logout?))
+    (if (and (seq multiaccounts))
       ;; We specifically pass a bunch of fields instead of the whole multiaccount
       ;; as we want store some fields in multiaccount that are not here
       (let [multiaccount (first (sort-by :timestamp > (vals multiaccounts)))]
@@ -36,9 +36,7 @@
                                         (select-keys
                                          multiaccount
                                          [:key-uid :name :public-key :identicon :images])))
-      (if logout?
-        (navigation/init-login cofx)
-        (navigation/init-intro cofx)))))
+      (navigation/init-intro cofx))))
 
 (fx/defn initialize-multiaccounts
   {:events [::initialize-multiaccounts]}
@@ -56,8 +54,8 @@
                              (assoc :multiaccounts/multiaccounts multiaccounts)
                              (assoc :multiaccounts/logout? logout?)
                              (assoc :multiaccounts/loading false))
-               :dispatch-n [::initialize-view {:logout? logout?}
-                            ::anon-metrics/fetch-opt-in-screen-displayed?]})))
+               :dispatch-n [[::initialize-view]
+                            [::anon-metrics/fetch-opt-in-screen-displayed?]]})))
 
 (fx/defn start-app
   {:events [:init/app-started]}
