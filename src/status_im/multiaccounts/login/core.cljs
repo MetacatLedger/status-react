@@ -21,7 +21,7 @@
             [status-im.transport.core :as transport]
             [status-im.stickers.core :as stickers]
             [status-im.mobile-sync-settings.core :as mobile-network]
-            [status-im.navigation.core :as navigation]
+            ;[status-im.navigation.core :as navigation]
             [status-im.utils.fx :as fx]
             [status-im.utils.keychain.core :as keychain]
             [status-im.utils.logging.core :as logging]
@@ -425,8 +425,10 @@
        cofx
        {:db (update-in db [:multiaccounts/login] assoc
                        :password password
-                       :save-password? true)}
-       (navigation/init-progress)
+                       :save-password? true)
+        :init-progress-fx nil}
+       ;;TODO test needs views then
+       ;(navigation/init-progress)
        login)
       (fx/merge
        cofx
@@ -437,8 +439,10 @@
                   (assoc-in [:keycard :pin :login] []))})
        #(if keycard-account?
           ;;TODO check this
-         (navigation/rnn-navigate-to % :keycard-login-pin)
-         (navigation/init-login %))))))
+          {:rnn-navigate-to-fx :keycard-login-pin}
+         ;(navigation/rnn-navigate-to % :keycard-login-pin)
+         {:init-login-fx nil})))))
+         ;(navigation/init-login %))))))
 
 (fx/defn get-credentials
   [{:keys [db] :as cofx} key-uid]
@@ -523,6 +527,7 @@
   [cofx]
   (let [first-account? (get-in cofx [:db :multiaccount :multiaccounts/first-account])]
     (fx/merge cofx
+              {:init-tabs-fx nil}
               (when first-account?
                 (acquisition/create))
               (if config/metrics-enabled?
