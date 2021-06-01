@@ -72,11 +72,10 @@
   (reduce (fn [acc {:keys [chat type wallet] :as account}]
             (if chat
               acc
-              (let [account (cond->
-                             (update account :address
-                                     eip55/address->checksum)
-                             type
-                             (update :type keyword))]
+              (let [account (cond-> (update account :address
+                                            eip55/address->checksum)
+                              type
+                              (update :type keyword))]
                 ;; if the account is the default wallet we
                 ;; put it first in the list
                 (if wallet
@@ -441,7 +440,7 @@
           ;;TODO check this
           {:rnn-navigate-to-fx :keycard-login-pin}
          ;(navigation/rnn-navigate-to % :keycard-login-pin)
-         {:init-login-fx nil})))))
+          {:init-login-fx nil})))))
          ;(navigation/init-login %))))))
 
 (fx/defn get-credentials
@@ -544,7 +543,6 @@
      cofx
      {:db (update db :keycard dissoc :application-info)}
      (open-login (select-keys multiaccount [:key-uid :name :public-key :identicon :images])))))
-
 
 (fx/defn hide-keycard-banner
   {:events [:hide-keycard-banner]}
