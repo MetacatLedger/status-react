@@ -10,7 +10,6 @@
    [status-im.ui.components.react :as react]
    [quo.components.text-input :as quo.text-input]
    [status-im.ui.components.icons.icons :as icons]
-   [status-im.utils.random :as random]
    [quo.design-system.colors :as quo.colors]))
 
 (def debug? ^boolean js/goog.DEBUG)

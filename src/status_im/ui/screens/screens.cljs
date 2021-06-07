@@ -99,6 +99,9 @@
             [status-im.ui.screens.appearance.views :as appearance]
             [status-im.ui.screens.privacy-and-security-settings.delete-profile :as delete-profile]
             [status-im.ui.screens.default-sync-period-settings.view :as default-sync-period-settings]
+            [status-im.ui.screens.communities.channel-details :as communities.channel-details]
+            [status-im.ui.screens.communities.edit-channel :as edit-channel]
+            [status-im.ui.screens.anonymous-metrics-settings.views :as anonymous-metrics-settings]
             [status-im.ui.components.colors :as colors]
             [status-im.ui.components.icons.icons :as icons]))
 
@@ -247,8 +250,16 @@
     :options   {:topBar {:visible false}}
     :component requests-to-join/requests-to-join-container}
    {:name      :create-community-channel
-    :options {:topBar {:title {:text (i18n/label :t/create-channel-title)}}}
-    :component create-channel/create-channel}
+    ;TODO custom
+    :options   {:topBar {:visible false}}
+    :component create-channel/view}
+   {:name :community-channel-details
+    ;TODO custom
+    :options   {:topBar {:visible false}}
+    :component communities.channel-details/view}
+   {:name      :edit-community-channel
+    :insets    {:bottom true}
+    :component edit-channel/view}
    {:name      :contact-toggle-list
     ;TODO custom subtitle
     :options   {:topBar {:visible false}}
@@ -472,6 +483,15 @@
     :component  delete-profile/delete-profile}
    {:name      :default-sync-period-settings
     :component default-sync-period-settings/default-sync-period-settings}
+   {:name      :anonymous-metrics-settings
+    :component anonymous-metrics-settings/settings}
+   {:name :anon-metrics-learn-more
+    :component anonymous-metrics-settings/learn-more}
+   {:name :anon-metrics-view-data
+    :component anonymous-metrics-settings/view-data}
+   {:name         :anon-metrics-opt-in
+    :back-handler :noop
+    :component    anonymous-metrics-settings/new-account-opt-in}
 
    ;;MODALS
 

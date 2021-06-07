@@ -20,8 +20,7 @@
             [status-im.utils.money :as money]
             [quo.core :as quo]
             [status-im.ethereum.core :as ethereum]
-            [status-im.ui.components.keyboard-avoid-presentation :as kb-presentation]
-            [status-im.ui.components.topbar :as topbar]))
+            [status-im.ui.components.keyboard-avoid-presentation :as kb-presentation]))
 
 (defn header [{:keys [label small-screen?]}]
   [react/view (styles/header small-screen?)
