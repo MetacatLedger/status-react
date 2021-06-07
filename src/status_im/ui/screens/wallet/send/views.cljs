@@ -140,7 +140,8 @@
   (letsubs [data [:commands/select-account]]
     [bottom-panel/animated-bottom-panel
      data
-     select-account-sheet]))
+     select-account-sheet
+     #(re-frame/dispatch [:hide-select-acc-sheet])]))
 
 (views/defview request-transaction [_]
   (views/letsubs [{:keys [amount-error amount-text from token sign-enabled?] :as tx}
@@ -149,15 +150,7 @@
                   prices [:prices]
                   wallet-currency [:wallet/currency]]
     [kb-presentation/keyboard-avoiding-view {:style {:flex 1}}
-     [react/view {:flex 1}
-      [topbar/topbar
-       {:navigation    {:on-press
-                        #(do
-                           (re-frame/dispatch [:wallet/cancel-transaction-command])
-                           (re-frame/dispatch [:navigate-back]))}
-        :modal?        true
-        :border-bottom true
-        :title         (i18n/label :t/request-transaction)}]
+     [:<>
       [react/scroll-view {:style                        {:flex 1}
                           :keyboard-should-persist-taps :handled}
        [react/view {:style (styles/sheet)}
@@ -210,15 +203,7 @@
                   window-width [:dimensions/window-width]]
     (let [to-norm (ethereum/normalized-hex (if (string? to) to (:address to)))]
       [kb-presentation/keyboard-avoiding-view {:style {:flex 1}}
-       [react/view {:flex 1}
-        [topbar/topbar
-         {:navigation    {:on-press
-                          #(do
-                             (re-frame/dispatch [:wallet/cancel-transaction-command])
-                             (re-frame/dispatch [:navigate-back]))}
-          :modal?        true
-          :border-bottom true
-          :title         (i18n/label :t/send-transaction)}]
+       [:<>
         [react/scroll-view {:style                        {:flex 1}
                             :keyboard-should-persist-taps :handled}
          [react/view {:style (styles/sheet)}

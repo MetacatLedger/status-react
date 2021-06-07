@@ -148,7 +148,8 @@
                      :padding-bottom          40
                      :flex 1}}
         [pin]])
-     window-height]))
+     window-height
+     #()]))
 
 (defview add-account []
   (letsubs [{:keys [type account] :as add-account} [:add-account]

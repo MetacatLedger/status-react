@@ -9,7 +9,9 @@
    ["react-native-gesture-handler" :refer (gestureHandlerRootHOC)]
    [status-im.ui.components.react :as react]
    [quo.components.text-input :as quo.text-input]
-   [status-im.ui.components.icons.icons :as icons]))
+   [status-im.ui.components.icons.icons :as icons]
+   [status-im.utils.random :as random]
+   [quo.design-system.colors :as quo.colors]))
 
 (def debug? ^boolean js/goog.DEBUG)
 
@@ -63,6 +65,7 @@
    (let [{:keys [options]} (get views/screens comp)]
      (reset! curr-modal true)
      (swap! modals conj comp)
+     (println " MODALS" @modals)
      (.showModal Navigation
                  (clj->js {:stack {:children
                                    [{:component
@@ -91,6 +94,8 @@
   (.registerModalDismissedListener
    (.events Navigation)
    (fn [_]
+     (when-let [event (get-in views/screens [(last @modals) :on-dissmiss])]
+       (re-frame/dispatch event))
      (if (> (count @modals) 1)
        (let [new-modals (butlast @modals)]
          (reset! modals (vec new-modals))
@@ -141,7 +146,7 @@
 
 ;; SET STACK ROOT
 (re-frame/reg-fx
- :rnn-set-root-fx
+ :set-stack-root-fx
  (fn [[stack comp]]
    (.setStackRoot Navigation
                   (name stack)
@@ -200,7 +205,11 @@
      (reset! root-comp-id (get tab-root-ids (.-selectedTabIndex evn))))))
 
 ;; OVERLAY (Popover and bottom sheets)
+(defn dissmiss-overlay [comp]
+  (.dismissOverlay Navigation comp))
+
 (defn show-overlay [comp]
+  (dissmiss-overlay comp)
   (.showOverlay Navigation
                 (clj->js
                  {:component {:name    comp
@@ -208,11 +217,10 @@
                               :options (merge (if platform/android?
                                                 {:statusBar {:translucent true}}
                                                 (roots/status-bar-options))
-                                              {:layout  {:componentBackgroundColor "transparent"}
+                                              {:layout  {:componentBackgroundColor (if platform/android?
+                                                                                     (:backdrop @quo.colors/theme)
+                                                                                     "transparent")}
                                                :overlay {:interceptTouchOutside true}})}})))
-
-(defn dissmiss-all-overlays []
-  (.dismissAllOverlays Navigation))
 
 ;; POPOVER
 (defonce popover-reg
@@ -222,7 +230,7 @@
                       (fn [] views/popover-comp)))
 
 (re-frame/reg-fx :rnn-show-popover (fn [] (show-overlay "popover")))
-(re-frame/reg-fx :rnn-hide-popover dissmiss-all-overlays)
+(re-frame/reg-fx :rnn-hide-popover (fn [] (dissmiss-overlay "popover")))
 
 ;; BOTTOM SHEETS
 (defonce bottom-sheet-reg
@@ -232,7 +240,30 @@
                       (fn [] views/sheet-comp)))
 
 (re-frame/reg-fx :rnn-show-bottom-sheet (fn [] (show-overlay "bottom-sheet")))
-(re-frame/reg-fx :rnn-hide-bottom-sheet dissmiss-all-overlays)
+(re-frame/reg-fx :rnn-hide-bottom-sheet (fn [] (dissmiss-overlay "bottom-sheet")))
+
+;; SIGNING
+
+(defonce signing-sheet-reg
+  (.registerComponent Navigation
+                      "signing-sheet"
+                      (fn [] (gestureHandlerRootHOC views/signing-comp))
+                      (fn [] views/signing-comp)))
+
+(re-frame/reg-fx :rnn-show-signing-sheet (fn [] (show-overlay "signing-sheet")))
+(re-frame/reg-fx :rnn-hide-signing-sheet (fn [] (dissmiss-overlay "signing-sheet")))
+
+;; Select account
+;; TODO why is this not a regular bottom sheet ?
+
+(defonce select-acc-sheet-reg
+  (.registerComponent Navigation
+                      "select-acc-sheet"
+                      (fn [] (gestureHandlerRootHOC views/select-acc-comp))
+                      (fn [] views/select-acc-comp)))
+
+(re-frame/reg-fx :rnn-show-select-acc-sheet (fn [] (show-overlay "select-acc-sheet")))
+(re-frame/reg-fx :rnn-hide-select-acc-sheet (fn [] (dissmiss-overlay "select-acc-sheet")))
 
 ;; NAVIGATION
 

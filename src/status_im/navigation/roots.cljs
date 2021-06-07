@@ -21,12 +21,15 @@
                 :color colors/black}})
 
 (defn bottom-tab-general [icon]
-  {:fontSize  11
-   :icon (icons/icon-source icon)
-   :badgeColor colors/blue
-   :dotIndicator {:color colors/blue :visible false :size 10}
-   :iconColor colors/gray :selectedIconColor colors/blue
-   :textColor colors/gray :selectedTextColor colors/blue})
+  (merge
+   {:fontSize  11
+    :icon (icons/icon-source icon)
+    :badgeColor colors/blue
+    :dotIndicator {:color colors/blue :visible false :size 10}
+    :iconColor colors/gray :selectedIconColor colors/blue
+    :textColor colors/gray :selectedTextColor colors/blue}
+   (when platform/android?
+     {:badge ""})))
 
 (defn default-root []
   {:layout {:componentBackgroundColor colors/white

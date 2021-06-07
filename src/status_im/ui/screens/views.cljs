@@ -5,7 +5,13 @@
             [status-im.ui.screens.screens :as screens]
             [oops.core :refer [oget]]
             [status-im.ui.screens.popover.views :as popover]
-            [status-im.ui.screens.bottom-sheets.views :as bottom-sheets]))
+            [status-im.ui.screens.bottom-sheets.views :as bottom-sheets]
+            [status-im.ui.screens.signing.views :as signing]
+            [status-im.ui.screens.wallet.send.views :as wallet.send.views]
+            [re-frame.core :as re-frame]
+            [status-im.ui.components.colors :as colors]
+            [status-im.utils.config :as config]
+            [status-im.keycard.test-menu :as keycard.test-menu]))
 
 (defn get-screens []
   (reduce
@@ -37,6 +43,11 @@
                       (get style :padding-top)
                       (get style :padding-vertical))})))
 
+(defn inactive []
+  (when @(re-frame/subscribe [:hide-screen?])
+    [react/view {:position :absolute :flex 1 :top 0 :bottom 0 :left 0 :right 0 :background-color colors/white
+                 :z-index 999999999999999999}]))
+
 (defn screen [key]
   (reagent.core/reactify-component
    (fn []
@@ -49,9 +60,12 @@
                        :style (wrapped-screen-style
                                {:insets (get-in screens [(keyword key) :insets])}
                                insets)}
+           [inactive]
            [(get-in (if js/goog.DEBUG (get-screens) screens) [(keyword key) :component])]]))]
       (when js/goog.DEBUG
-        [reloader/reload-view])])))
+        [reloader/reload-view])
+      (when config/keycard-test-menu-enabled?
+        [keycard.test-menu/test-menu])])))
 
 (defn component [comp]
   (reagent/reactify-component
@@ -64,6 +78,7 @@
    (fn []
      ^{:key (str "popover" @reloader/cnt)}
      [react/safe-area-provider
+      [inactive]
       [popover/popover]
       (when js/goog.DEBUG
         [reloader/reload-view])])))
@@ -73,6 +88,27 @@
    (fn []
      ^{:key (str "seet" @reloader/cnt)}
      [react/safe-area-provider
+      [inactive]
       [bottom-sheets/bottom-sheet]
+      (when js/goog.DEBUG
+        [reloader/reload-view])])))
+
+(def signing-comp
+  (reagent/reactify-component
+   (fn []
+     ^{:key (str "signing-seet" @reloader/cnt)}
+     [react/safe-area-provider
+      [inactive]
+      [signing/signing]
+      (when js/goog.DEBUG
+        [reloader/reload-view])])))
+
+(def select-acc-comp
+  (reagent/reactify-component
+   (fn []
+     ^{:key (str "select-acc-sheet" @reloader/cnt)}
+     [react/safe-area-provider
+      [inactive]
+      [wallet.send.views/select-account]
       (when js/goog.DEBUG
         [reloader/reload-view])])))

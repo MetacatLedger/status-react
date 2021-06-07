@@ -309,7 +309,8 @@
   [toolbar-content/toolbar-content-view-inner @(re-frame/subscribe [:chats/current-chat])])
 
 (defn chat []
-  (let [bottom-space (reagent/atom 0)
+  (let [curr-chat-id (:chat-id @(re-frame/subscribe [:chats/current-chat-chat-view]))
+        bottom-space (reagent/atom 0)
         panel-space (reagent/atom 52)
         active-panel (reagent/atom nil)
         position-y (animated/value 0)
@@ -321,7 +322,7 @@
         set-active-panel (get-set-active-panel active-panel)
         on-close #(set-active-panel nil)]
     (reagent/create-class
-     {:component-will-unmount #(re-frame/dispatch-sync [:close-chat])
+     {:component-will-unmount #(re-frame/dispatch-sync [:close-chat curr-chat-id])
       :reagent-render
       (fn []
         (let [{:keys [chat-id show-input? group-chat admins invitation-admin] :as chat}

@@ -50,10 +50,6 @@
             {:db (assoc-in db [:keycard :flow] :login)}
             (navigation/navigate-to-cofx :keycard-recovery-pair nil)))
 
-(fx/defn frozen-keycard-popup
-  [{:keys [db]}]
-  {:db (assoc db :popover/popover {:view :frozen-card})})
-
 (fx/defn reset-pin
   {:events [::reset-pin]}
   [{:keys [db] :as cofx}]
@@ -122,7 +118,7 @@
       (and (zero? pin-retry-counter)
            (or (nil? puk-retry-counter)
                (pos? puk-retry-counter)))
-      nil #_(frozen-keycard-popup cofx)
+      nil
 
       :else
       (common/get-keys-from-keycard cofx))))

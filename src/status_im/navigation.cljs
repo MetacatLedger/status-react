@@ -81,4 +81,16 @@
   [_ tab cnt]
   {:rnn-change-tab-count-fx [tab cnt]})
 
+(fx/defn hide-signing-sheet
+  {:events [:hide-signing-sheet]}
+  [_]
+  {:rnn-hide-signing-sheet nil})
+
+(fx/defn hide-select-acc-sheet
+  {:events [:hide-select-acc-sheet]}
+  [_]
+  {:rnn-hide-select-acc-sheet nil})
+
+
+
 

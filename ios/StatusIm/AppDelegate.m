@@ -78,21 +78,7 @@ static void InitializeFlipper(UIApplication *application) {
   [[NSUserDefaults standardUserDefaults] registerDefaults:appDefaults];
 
   [ReactNativeNavigation bootstrapWithDelegate:self launchOptions:launchOptions];
-  /*RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                      moduleName:@"StatusIm"
-                                               initialProperties:nil];
-  rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];*/
 
-  /*self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  _blankView = [[UIView alloc]initWithFrame:self.window.frame];
-  _blankView.backgroundColor = [UIColor whiteColor];
-  _blankView.alpha = 0;
-
-  UIViewController *rootViewController = [UIViewController new];
-  rootViewController.view = rootView;
-  self.window.rootViewController = rootViewController;
-  [self.window makeKeyAndVisible];*/
   [RNSplashScreen show];
 
   UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];

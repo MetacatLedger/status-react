@@ -762,14 +762,14 @@
 
 (fx/defn wallet-will-focus
   {:events [::wallet-stack]}
-  [{:keys [db] :as cofx}]
+  [{:keys [db]}]
   (let [wallet-set-up-passed? (get-in db [:multiaccount :wallet-set-up-passed?])
         sign-phrase-showed? (get db :wallet/sign-phrase-showed?)]
-    {:dispatch [:wallet.ui/pull-to-refresh] ;TODO temporary simple fix for v1
+    {:dispatch-n [[:wallet.ui/pull-to-refresh] ;TODO temporary simple fix for v1
+                  [:show-popover {:view [signing-phrase/signing-phrase]}]]
      :db       (if (or wallet-set-up-passed? sign-phrase-showed?)
                  db
-                 (assoc db :popover/popover {:view [signing-phrase/signing-phrase]}
-                        :wallet/sign-phrase-showed? true))}))
+                 (assoc db :wallet/sign-phrase-showed? true))}))
 
 (fx/defn wallet-wallet-add-custom-token
   {:events [:wallet/wallet-add-custom-token]}

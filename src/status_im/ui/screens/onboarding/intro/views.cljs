@@ -85,11 +85,13 @@
         finished          (animated/value 0)
         clock             (animated/clock)
         go-next           (fn []
-                            (let [x (if (>= @scroll-x (* (dec (count slides))
-                                                         width))
+                            (let [x (if (>= @scroll-x (- (* (dec (count slides))
+                                                            width) 5))
                                       0
                                       (+ @scroll-x width))]
                               (reset! index (Math/round (/ x width)))
+                              (println "GONEXT" @scroll-x (* (dec (count slides))
+                                                             width))
                               (some-> ^js @scroll-view-ref (.scrollTo #js {:x x :animated true}))))
         code              (animated/block
                            [(animated/cond* (animated/and* (animated/not* (animated/clock-running clock))

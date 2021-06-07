@@ -576,16 +576,16 @@
     :component notifications-settings/notifications-advanced-settings}
 
    ;[Wallet] Prepare Transaction
-   {:name      :prepare-send-transaction
-    ;;TODO custom back handler, we could have on-blure, similar to on-focus
-    :options   {:topBar {:visible false}}
-    :component wallet/prepare-send-transaction}
+   {:name        :prepare-send-transaction
+    :on-dissmiss [:wallet/cancel-transaction-command]
+    :options     {:topBar {:title {:text (i18n/label :t/send-transaction)}}}
+    :component   wallet/prepare-send-transaction}
 
    ;[Wallet] Request Transaction
    {:name      :request-transaction
     :insets    {:bottom true}
-    ;;TODO custom back handler
-    :options   {:topBar {:visible false}}
+    :on-dissmiss [:wallet/cancel-transaction-command]
+    :options     {:topBar {:title {:text (i18n/label :t/request-transaction)}}}
     :component wallet/request-transaction}
 
    ;[Wallet] Buy crypto

@@ -235,8 +235,8 @@
 
 (defn keyboard-avoiding-view [props & children]
   (into [keyboard-avoiding-view-class
-         (merge (when platform/ios? {:behavior :padding}) props {:keyboardVerticalOffset
-                                                                 (+ 44 (get @navigation-const :status-bar-height))})]
+         (merge (when platform/ios? {:behavior :padding})
+                (update props :keyboardVerticalOffset + 44 (:status-bar-height @navigation-const)))]
         children))
 
 (defn scroll-view [props & children]

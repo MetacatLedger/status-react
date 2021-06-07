@@ -42,7 +42,7 @@
            (merge (when platform/ios?
                     {:behavior :padding})
                   props
-                  {:keyboardVerticalOffset (+ 44 (get @navigation-const :status-bar-height))})]
+                  {:keyboardVerticalOffset (+ 44 (:status-bar-height @navigation-const))})]
           (reagent/children this))))
 
 (def keyboard (.-Keyboard ^js rn))

@@ -11,7 +11,8 @@
             [status-im.utils.types :as types]
             [taoensso.timbre :as log]
             [status-im.bottom-sheet.core :as bottom-sheet]
-            [status-im.utils.platform :as platform]))
+            [status-im.utils.platform :as platform]
+            [status-im.popover.core :as popover]))
 
 (def default-pin "000000")
 
@@ -376,7 +377,7 @@
      cofx
      {:db (assoc-in db [:keycard :pin :status] :frozen-card)}
      hide-connection-sheet)
-    {:db (assoc db :popover/popover {:view :frozen-card})}))
+    (popover/show-popover cofx {:view :frozen-card})))
 
 (fx/defn on-get-keys-error
   {:events [:keycard.callback/on-get-keys-error]}
