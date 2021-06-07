@@ -5,5 +5,3 @@
 (defn change-theme [theme]
   (quo-theme/set-theme theme)
   (colors/set-theme theme))
-  ;;TODO update screens
-  ;;(status-bar/set-status-bar nil)
