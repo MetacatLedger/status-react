@@ -335,7 +335,6 @@
               {:db (assoc db :browser/options
                           {:browser-id browser-id})}
               (update-browser browser)
-              ;;TODO change tab to browser
               (navigation/set-stack-root :browser-stack :browser)
               (resolve-url nil))))
 

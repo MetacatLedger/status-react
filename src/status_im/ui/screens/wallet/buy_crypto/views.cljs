@@ -53,13 +53,10 @@
 
 (views/defview buy-crypto []
   (views/letsubs [on-ramps [:buy-crypto/on-ramps]]
-    [react/view {:flex 1}
-     #_[topbar/topbar {:border-bottom false
-                       :modal? true}]
-     [list/flat-list {:data               on-ramps
-                      :key-fn             :site-url
-                      :header             [buy-crypto-header]
-                      :render-fn          render-on-ramp}]]))
+    [list/flat-list {:data               on-ramps
+                     :key-fn             :site-url
+                     :header             [buy-crypto-header]
+                     :render-fn          render-on-ramp}]))
 
 (defn website [route]
   (let [has-loaded? (reagent/atom false)
