@@ -3,7 +3,7 @@
             [reagent.core :as reagent]
             [cljs-bean.core :as bean]
             [quo.design-system.colors :as colors]
-            [status-im.ui.screens.chat.components.hooks :as hooks]
+            [status-im.ui.screens.chat.components.hooks :refer [use-keyboard-dimension]]
             [quo.react :as react]
             [quo.platform :as platform]
             [quo.react-native :as rn]
@@ -44,7 +44,7 @@
              children        :children}           (bean/bean props)
             {keyboard-height       :height
              keyboard-max-height   :max-height
-             keyboard-end-position :end-position} (hooks/use-keyboard-dimension)
+             keyboard-end-position :end-position} (use-keyboard-dimension)
             {:keys [bottom]}                      (use-safe-area)
             {on-layout  :on-layout
              bar-height :height}                  (rn/use-layout)
@@ -110,14 +110,13 @@
              on-close        :onClose
              has-panel       :hasPanel
              children        :children}       (bean/bean props)
-            ;;TODO (hooks/use-keyboard-dimension) works different with RNN
-            keyboard-max-height hooks/default-kb-height
-            ;{:keys [bottom]}                  (use-safe-area)
+            {keyboard-max-height :max-height} (use-keyboard-dimension)
+            {:keys [bottom]}                  (use-safe-area)
             {on-layout  :on-layout
              bar-height :height}              (rn/use-layout)
 
             visible         has-panel
-            panel-on-screen (* -1 (- keyboard-max-height (tabbar/get-height)))
+            panel-on-screen (* -1 (- keyboard-max-height bottom (tabbar/get-height)))
             max-delta       (min 0 (if has-panel panel-on-screen 0))
             panel-height    (* -1 max-delta)
             on-update       (fn []
