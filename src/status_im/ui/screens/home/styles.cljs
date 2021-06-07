@@ -77,3 +77,20 @@
    :background-color colors/gray
    :align-items      :center
    :justify-content  :center})
+
+(defn counter-public-container []
+  {:right            2
+   :top              0
+   :position         :absolute
+   :border-radius    8
+   :width            16
+   :height           16
+   :justify-content  :center
+   :align-items      :center
+   :background-color colors/white})
+
+(def counter-public
+  {:background-color colors/blue
+   :width            12
+   :border-radius    6
+   :height           12})

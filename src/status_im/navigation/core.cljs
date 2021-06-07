@@ -32,7 +32,6 @@
 ;; PUSH SCREEN
 (defn navigate [comp]
   (let [{:keys [options]} (get views/screens comp)]
-    (println "NAVIGATE" comp " cur-root: " (name @root-comp-id))
     (.push Navigation
            (name @root-comp-id)
            (clj->js {:component {:id      comp
@@ -64,7 +63,6 @@
    (let [{:keys [options]} (get views/screens comp)]
      (reset! curr-modal true)
      (swap! modals conj comp)
-     (println " MODALS" @modals)
      (.showModal Navigation
                  (clj->js {:stack {:children
                                    [{:component

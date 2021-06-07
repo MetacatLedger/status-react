@@ -23,7 +23,6 @@
             [status-im.ui.components.invite.views :as invite]
             [status-im.ui.components.topbar :as topbar]
             [status-im.ui.components.plus-button :as components.plus-button]
-            [status-im.ui.components.tabbar.styles :as tabs.styles]
             [status-im.ui.screens.chat.sheets :as sheets]
             [status-im.ui.components.tabbar.core :as tabbar])
   (:require-macros [status-im.utils.views :as views]))
@@ -194,9 +193,9 @@
                   :theme    :icon}
       :main-icons/notification]
      (when (pos? notif-count)
-       [react/view {:style (merge (tabs.styles/counter-public-container) {:top 5 :right 5})
+       [react/view {:style (merge (styles/counter-public-container) {:top 5 :right 5})
                     :pointer-events :none}
-        [react/view {:style               tabs.styles/counter-public
+        [react/view {:style               styles/counter-public
                      :accessibility-label :notifications-unread-badge}]])]))
 
 (defn home []

@@ -231,6 +231,7 @@
 (.then (.constants Navigation)
        (fn [^js consts]
          (reset! navigation-const {:top-bar-height (.-topBarHeight consts)
+                                   :bottom-tabs-height (.-bottomTabsHeight consts)
                                    :status-bar-height (.-statusBarHeight consts)})))
 
 (defn keyboard-avoiding-view [props & children]
