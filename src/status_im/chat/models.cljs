@@ -336,9 +336,7 @@
   {:events [:chat.ui/show-profile]}
   [{:keys [db] :as cofx} identity]
   (let [my-public-key (get-in db [:multiaccount :public-key])]
-    (if (= my-public-key identity)
-      ;;TODO change tab to profile and pop to root
-      (navigation/navigate-to-cofx cofx :my-profile)
+    (when (not= my-public-key identity)
       (fx/merge
        cofx
        {:db (assoc db :contacts/identity identity)}
