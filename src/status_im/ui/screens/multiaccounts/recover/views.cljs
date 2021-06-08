@@ -115,4 +115,4 @@
     (re-frame/dispatch [:multiaccounts.recover/select-storage-next-pressed])
 
     ;; Enter password (need to wait for a moment for this to finish)
-    (re-frame/dispatch [:multiaccounts.recover/enter-password-next-pressed {:key-code "111111"}])))
+    (re-frame/dispatch [:multiaccounts.recover/enter-password-next-pressed "111111"])))

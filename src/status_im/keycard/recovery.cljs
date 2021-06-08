@@ -180,7 +180,8 @@
       (fx/merge cofx
                 {:db (-> db
                          (assoc-in [:keycard :setup-step] nil)
-                         (dissoc :intro-wizard))}
+                         (dissoc :intro-wizard))
+                 :init-root-fx :onboarding-notification}
                 (multiaccounts.create/on-multiaccount-created
                  {:recovered            (or recovered (get-in db [:intro-wizard :recovering?]))
                   :derived              {constants/path-wallet-root-keyword
@@ -202,9 +203,7 @@
                   :keycard-paired-on    paired-on
                   :chat-key             whisper-private-key}
                  encryption-public-key
-                 {})
-                ;;TODO change this
-                (navigation/navigate-to-cofx :onboarding-notification nil)))))
+                 {})))))
 
 (fx/defn return-to-keycard-login
   [{:keys [db] :as cofx}]

@@ -221,8 +221,7 @@
       ;;TODO: fix circular dependency to remove dispatch here
       {:dispatch [:recovery.ui/keycard-option-pressed]}
       (fx/merge cofx
-                {:db (update db :intro-wizard assoc :step :create-code
-                             :forward-action :multiaccounts.recover/enter-password-next-pressed)}
+                {:db (update db :intro-wizard assoc :step :create-code)}
                 (navigation/navigate-to-cofx :create-password nil)))))
 
 (fx/defn re-encrypt-pressed
@@ -240,7 +239,7 @@
 (fx/defn confirm-password-next-button-pressed
   {:events [:multiaccounts.recover/enter-password-next-pressed]
    :interceptors [(re-frame/inject-cofx :random-guid-generator)]}
-  [{:keys [db] :as cofx} {:keys [key-code]}]
+  [cofx key-code]
   (store-multiaccount cofx key-code))
 
 (fx/defn count-words

@@ -334,7 +334,9 @@
                                    (assoc-in [:multiaccount :multiaccounts/first-account] first-account?))
                :init-root-fx   :onboarding-notification
                :dispatch-later [{:ms 2000 :dispatch [::initialize-wallet
-                                                     accounts nil nil (:recovered multiaccount) true]}]}
+                                                     accounts nil nil
+                                                     (or (get db :recovered-account?) (:recovered multiaccount))
+                                                     true]}]}
               (finish-keycard-setup)
               (transport/start-messenger)
               (chat.loading/initialize-chats)
@@ -521,10 +523,9 @@
     (fx/merge cofx
               {:init-root-fx :chat-stack}
               (when first-account?
-                (acquisition/create)))))
-              ;(if config/metrics-enabled?))))
-                ;(navigation/navigate-to :anon-metrics-opt-in {})))))
-                ;(navigation/init-tabs)))))
+                (acquisition/create))
+              #(when config/metrics-enabled?
+                 {:dispatch [:navigate-to :anon-metrics-opt-in]}))))
 
 (fx/defn multiaccount-selected
   {:events [:multiaccounts.login.ui/multiaccount-selected]}

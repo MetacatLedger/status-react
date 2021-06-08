@@ -33,9 +33,7 @@
             keep-keys-on-keycard? @(re-frame/subscribe [:delete-profile/keep-keys-on-keycard?])]
         (when (and @text-input-ref error (not @password))
           (.clear ^js @text-input-ref))
-        [react/view
-         {:style {:flex            1
-                  :justify-content :space-between}}
+        [react/keyboard-avoiding-view {:style {:flex 1}}
          [react/scroll-view {:style {:flex 1}}
           [react/view {:style {:align-items :center}}
            [quo/text {:weight :bold
