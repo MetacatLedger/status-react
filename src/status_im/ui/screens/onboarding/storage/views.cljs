@@ -22,7 +22,7 @@
 (defview select-key-storage []
   (letsubs [{:keys [selected-storage-type]} [:intro-wizard/select-key-storage]]
     [:<>
-     [react/view {:style {:flex 1 :padding-top 44}}
+     [react/view {:style {:flex 1}}
       [ui/title-with-description :t/intro-wizard-title3 :t/intro-wizard-text3]
       [ui/learn-more :t/about-key-storage-title :t/about-key-storage-content]
       [react/view {:style {:margin-top 60}}

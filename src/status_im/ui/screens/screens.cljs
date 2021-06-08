@@ -681,40 +681,53 @@
             ;;TODO move to popover?
             :component keycard/not-keycard}
            {:name      :keycard-onboarding-recovery-phrase
-            :options   {:popGesture         false
+            :options   {:topBar {:visible false}
+                        :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
             :component keycard.onboarding/recovery-phrase}
            {:name      :keycard-onboarding-recovery-phrase-confirm-word1
-            :options   {:popGesture         false
+            :options   {:topBar {:visible false}
+                        :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
             :component keycard.onboarding/recovery-phrase-confirm-word}
            {:name      :keycard-onboarding-recovery-phrase-confirm-word2
-            :options   {:popGesture         false
+            :options   {:topBar {:visible false}
+                        :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
             :component keycard.onboarding/recovery-phrase-confirm-word}
            {:name      :keycard-recovery-intro
-            :options   {:popGesture         false
+            :options   {:topBar {:visible false}
+                        :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
             :component keycard.recovery/intro}
            {:name      :keycard-recovery-success
-            :options   {:popGesture         false
+            :options   {:topBar {:visible false}
+                        :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
             :insets    {:bottom true}
             :component keycard.recovery/success}
            {:name      :keycard-recovery-no-key
+            :options   {:topBar {:visible false}
+                        :popGesture         false
+                        :hardwareBackButton {:dismissModalOnPress false
+                                             :popStackOnPress     false}}
             :component keycard.recovery/no-key}
            {:name      :keycard-authentication-method
+            :options   {:topBar {:visible false}}
             :component keycard.authentication/keycard-authentication-method}
            {:name      :keycard-login-pin
+            :options   {:topBar {:visible false}}
             :component keycard/login-pin}
            {:name      :keycard-blank
+            :options   {:topBar {:visible false}}
             :component keycard/blank}
            {:name      :keycard-unpaired
+            :options   {:topBar {:visible false}}
             :component keycard/unpaired}
            {:name      :keycard-settings
             :options {:topBar {:title {:text (i18n/label :t/status-keycard)}}}
