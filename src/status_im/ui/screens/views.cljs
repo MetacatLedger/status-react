@@ -11,7 +11,8 @@
             [re-frame.core :as re-frame]
             [status-im.ui.components.colors :as colors]
             [status-im.utils.config :as config]
-            [status-im.keycard.test-menu :as keycard.test-menu]))
+            [status-im.keycard.test-menu :as keycard.test-menu]
+            [status-im.utils.platform :as platform]))
 
 (defn get-screens []
   (reduce
@@ -20,7 +21,7 @@
    {}
    screens/screens))
 
-;;TODO find why hot reload doesn't work
+;;we need this for hot reload (for some reason it doesn't reload, so we have to call get-screens if debug true)
 (def screens (get-screens))
 
 (def components
@@ -33,6 +34,9 @@
 (defn wrapped-screen-style [{:keys [insets style]} insets-obj]
   (merge
    {:flex 1}
+   (when platform/android?
+     {:border-bottom-width 1
+      :border-bottom-color colors/gray-lighter})
    style
    (when (get insets :bottom)
      {:padding-bottom (+ (oget insets-obj "bottom")
@@ -56,8 +60,7 @@
       [react/safe-area-consumer
        (fn [insets]
          (reagent/as-element
-          [react/view {;;TODO check how it works
-                       :style (wrapped-screen-style
+          [react/view {:style (wrapped-screen-style
                                {:insets (get-in screens [(keyword key) :insets])}
                                insets)}
            [inactive]

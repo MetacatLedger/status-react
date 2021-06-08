@@ -199,7 +199,10 @@
   (.registerBottomTabSelectedListener
    (.events Navigation)
    (fn [^js evn]
-     (reset! root-comp-id (get tab-root-ids (.-selectedTabIndex evn))))))
+     (let [comp (get tab-root-ids (.-selectedTabIndex evn))]
+       (when (and platform/android? (= @root-comp-id comp))
+         (.popToRoot Navigation (name comp)))
+       (reset! root-comp-id comp)))))
 
 ;; OVERLAY (Popover and bottom sheets)
 (defn dissmiss-overlay [comp]
