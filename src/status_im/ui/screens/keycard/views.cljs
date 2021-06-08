@@ -207,7 +207,8 @@
      [react/view
       {:style {:width         260
                :margin-bottom 15}}
-      [react/view ;TODO intro-styles/buttons-container
+      [react/view {:align-items        :center
+                   :padding-horizontal 32}
        [quo/button {:on-press #(re-frame/dispatch
                                 [::keycard.login/login-after-reset])}
         (i18n/label :t/open)]]])])

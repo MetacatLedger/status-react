@@ -65,8 +65,7 @@
                     next-button-disabled?
                     passphrase-error]}
             @(re-frame/subscribe [:intro-wizard/enter-phrase])]
-        [react/keyboard-avoiding-view {:flex             1
-                                       :background-color colors/white}
+        [react/keyboard-avoiding-view {:flex 1}
          [quo/text {:weight :bold
                     :align  :center
                     :size   :x-large}

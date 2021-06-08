@@ -199,7 +199,8 @@
                      :accessibility-label :notifications-unread-badge}]])]))
 
 (defn home []
-  [react/keyboard-avoiding-view {:style {:flex 1}}
+  [react/keyboard-avoiding-view {:style {:flex 1}
+                                 :ignore-offset true}
    [topbar/topbar {:title           (i18n/label :t/chat)
                    :navigation      :none
                    :right-component [react/view {:flex-direction :row :margin-right 16}

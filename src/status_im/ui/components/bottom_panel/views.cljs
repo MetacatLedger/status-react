@@ -93,7 +93,9 @@
                                             (hide-panel-anim bottom-anim-value alpha-value (- window-height))))))
       :reagent-render             (fn []
                                     (if @current-obj
-                                      [react/keyboard-avoiding-view {:style {:position :absolute :top 0 :bottom 0 :left 0 :right 0}}
+                                      [react/keyboard-avoiding-view {:style {:position :absolute :top 0 :bottom 0 :left 0 :right 0}
+                                                                     :ignore-offset true}
+
                                        [react/view {:flex 1}
                                         (when platform/ios?
                                           [react/animated-view {:flex 1 :background-color colors/black-persist :opacity alpha-value}])

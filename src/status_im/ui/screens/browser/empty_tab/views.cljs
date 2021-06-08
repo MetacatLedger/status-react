@@ -112,7 +112,8 @@
                   dapps-account [:dapps-account]
                   url-text (atom nil)]
     (let [bookmarks (vals bookmarks)]
-      [react/keyboard-avoiding-view {:style {:flex 1}}
+      [react/keyboard-avoiding-view {:style {:flex 1}
+                                     :ignore-offset true}
        [quo/text-input {:on-change-text      #(reset! url-text %)
                         :on-submit-editing   #(re-frame/dispatch [:browser.ui/open-url @url-text])
                         :placeholder         (i18n/label :t/enter-url)

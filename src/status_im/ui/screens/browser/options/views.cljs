@@ -76,7 +76,7 @@
             :accessibility-label :open-chat
             :title               (str "#" topic)
             :subtitle            (i18n/label :t/open-chat)
-            :on-press            #(do ;;TODO these all should be in one event, and also confusion with chat and home-root
+            :on-press            #(do
                                     (re-frame/dispatch [:navigate-change-tab :chat])
                                     (re-frame/dispatch [:pop-to-root-tab :chat-stack])
                                     (hide-sheet-and-dispatch [:chat.ui/start-public-chat topic {:navigation-reset? true}]))
