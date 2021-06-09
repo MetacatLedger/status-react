@@ -18,7 +18,7 @@ from views.base_element import Button, BaseElement, EditBox, Text
 
 class BackButton(Button):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id="back-button")
+        super().__init__(driver, accessibility_id="Navigate Up")
 
     def click(self, times_to_click: int = 1):
         for _ in range(times_to_click):
@@ -58,7 +58,7 @@ class TabButton(Button):
 
 class HomeButton(TabButton):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id="home-tab-button")
+        super().__init__(driver, accessibility_id="selected, , tab, 1 out of 5")
 
     def navigate(self):
         from views.home_view import HomeView
@@ -80,7 +80,7 @@ class HomeButton(TabButton):
 
 class DappTabButton(TabButton):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id="dapp-tab-button")
+        super().__init__(driver, accessibility_id=", tab, 2 out of 5")
 
     def navigate(self):
         from views.dapps_view import DappsView
@@ -101,7 +101,7 @@ class DappTabButton(TabButton):
 
 class WalletButton(TabButton):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id="wallet-tab-button")
+        super().__init__(driver, accessibility_id=", tab, 3 out of 5")
 
     def navigate(self):
         from views.wallet_view import WalletView
@@ -115,7 +115,7 @@ class WalletButton(TabButton):
 
 class ProfileButton(TabButton):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id="profile-tab-button")
+        super().__init__(driver, accessibility_id=", tab, 5 out of 5")
 
     def navigate(self):
         from views.profile_view import ProfileView
@@ -133,7 +133,7 @@ class ProfileButton(TabButton):
 
 class StatusButton(TabButton):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id="status-tab-button")
+        super().__init__(driver, accessibility_id=", tab, 4 out of 5")
 
     def navigate(self):
         from views.chat_view import ChatView

@@ -135,7 +135,7 @@ class SignInView(BaseView):
         # restore from seed phrase
         self.seedphrase_input = EditBox(self.driver, xpath="//android.widget.EditText")
         self.enter_seed_phrase_button = Button(self.driver, accessibility_id="enter-seed-phrase-button")
-        self.reencrypt_your_key_button = Button(self.driver, translation_id="re-encrypt-key")
+        self.reencrypt_your_key_button = Button(self.driver, accessibility_id="onboarding-next-button")
 
         # migrate multiaccount
         self.options_button = Button(self.driver, accessibility_id="sign-in-options")
