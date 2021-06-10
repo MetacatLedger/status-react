@@ -41,8 +41,8 @@
       #(dispatch-and-chill
         (if (= :advanced selected-storage-type)
           (if recovering?
-           [:multiaccounts.recover/select-storage-next-pressed]
-           [:keycard/start-onboarding-flow])
+            [:multiaccounts.recover/select-storage-next-pressed]
+            [:keycard/start-onboarding-flow])
           [:rnn-navigate-to :create-password])
         300)
       false]]))

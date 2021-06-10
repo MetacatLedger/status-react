@@ -40,7 +40,7 @@
 (def group-chat-enabled? (enabled? (get-config :GROUP_CHATS_ENABLED "0")))
 (def tooltip-events? (enabled? (get-config :TOOLTIP_EVENTS "0")))
 (def commands-enabled? (enabled? (get-config :COMMANDS_ENABLED "0")))
-(def keycard-test-menu-enabled? true);(enabled? (get-config :KEYCARD_TEST_MENU "0")))
+(def keycard-test-menu-enabled? (enabled? (get-config :KEYCARD_TEST_MENU "0")))
 (def qr-test-menu-enabled? (enabled? (get-config :QR_READ_TEST_MENU "0")))
 (def referrals-invite-enabled? (enabled? (get-config :ENABLE_REFERRAL_INVITE "0")))
 (def quo-preview-enabled? (enabled? (get-config :ENABLE_QUO_PREVIEW "0")))
