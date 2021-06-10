@@ -20,7 +20,7 @@
                    :subtitle-max-lines  2}]])
 
 (defview select-key-storage []
-  (letsubs [{:keys [selected-storage-type]} [:intro-wizard/select-key-storage]]
+  (letsubs [{:keys [selected-storage-type recovering?]} [:intro-wizard/select-key-storage]]
     [:<>
      [react/view {:style {:flex 1}}
       [ui/title-with-description :t/intro-wizard-title3 :t/intro-wizard-text3]
@@ -40,7 +40,9 @@
      [ui/next-button
       #(dispatch-and-chill
         (if (= :advanced selected-storage-type)
-          [:keycard/start-onboarding-flow]
+          (if recovering?
+           [:multiaccounts.recover/select-storage-next-pressed]
+           [:keycard/start-onboarding-flow])
           [:rnn-navigate-to :create-password])
         300)
       false]]))

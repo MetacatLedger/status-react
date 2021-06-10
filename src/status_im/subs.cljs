@@ -352,7 +352,7 @@
  :intro-wizard/select-key-storage
  :<- [:intro-wizard]
  (fn [wizard-state]
-   (select-keys wizard-state [:selected-storage-type])))
+   (select-keys wizard-state [:selected-storage-type :recovering?])))
 
 (re-frame/reg-sub
  :intro-wizard/enter-phrase
