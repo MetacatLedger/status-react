@@ -20,9 +20,10 @@
    :backButton {:icon  (icons/icon-source :main-icons/arrow-left)
                 :color colors/black}})
 
-(defn bottom-tab-general [icon]
+(defn bottom-tab-general [icon accessibility]
   (merge
-   {:fontSize  11
+   {:accessibilityLabel accessibility
+    :fontSize  11
     :icon (icons/icon-source icon)
     :badgeColor colors/blue
     :dotIndicator {:color colors/blue :visible false :size 10}
@@ -73,7 +74,7 @@
                                                   :id      :home
                                                   :options (merge (status-bar-options)
                                                                   {:topBar (assoc (topbar-options) :visible false)})}}]
-                          :options  {:bottomTab (bottom-tab-general :main-icons/message)}}}
+                          :options  {:bottomTab (bottom-tab-general :main-icons/message :home-tab-button)}}}
                  ;BROWSER STACK
                  {:stack {:id       :browser-stack
                           :children [{:component {:name    :empty-tab
@@ -81,28 +82,28 @@
                                                   :options (merge (status-bar-options)
                                                                   {:topBar (assoc (topbar-options) :visible false)})}}]
 
-                          :options  {:bottomTab (bottom-tab-general :main-icons/browser)}}}
+                          :options  {:bottomTab (bottom-tab-general :main-icons/browser :dapp-tab-button)}}}
                  ;WALLET STACK
                  {:stack {:id       :wallet-stack
                           :children [{:component {:name    :wallet
                                                   :id      :wallet
                                                   :options (merge (status-bar-options)
                                                                   {:topBar (assoc (topbar-options) :visible false)})}}]
-                          :options  {:bottomTab (bottom-tab-general :main-icons/wallet)}}}
+                          :options  {:bottomTab (bottom-tab-general :main-icons/wallet :wallet-tab-button)}}}
                  ;STATUS STACK
                  {:stack {:id       :status-stack
                           :children [{:component {:name    :status
                                                   :id      :status
                                                   :options (merge (status-bar-options)
                                                                   {:topBar (assoc (topbar-options) :visible false)})}}]
-                          :options  {:bottomTab (bottom-tab-general :main-icons/status)}}}
+                          :options  {:bottomTab (bottom-tab-general :main-icons/status :status-tab-button)}}}
                  ;PROFILE STACK
                  {:stack {:id       :profile-stack
                           :children [{:component {:name    :my-profile
                                                   :id      :my-profile
                                                   :options (merge (status-bar-options)
                                                                   {:topBar (assoc (topbar-options) :visible false)})}}]
-                          :options  {:bottomTab (bottom-tab-general :main-icons/user-profile)}}}]}}}
+                          :options  {:bottomTab (bottom-tab-general :main-icons/user-profile :profile-tab-button)}}}]}}}
 
    ;;INTRO (onboarding carousel)
    :intro
