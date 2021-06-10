@@ -198,7 +198,7 @@
             (deactivate-chat chat-id)
             (offload-messages chat-id)
             (when (not (= (:view-id db) :home))
-              (navigation/navigate-to-cofx :home {}))))
+              (navigation/pop-to-root-tab :chat-stack))))
 
 (fx/defn preload-chat-data
   "Takes chat-id and coeffects map, returns effects necessary when navigating to chat"

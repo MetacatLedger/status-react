@@ -16,11 +16,9 @@
             [status-im.utils.universal-links.core :as utils.universal-links]
             [status-im.i18n.i18n :as i18n]
             [status-im.ui.components.react :as react]
-            ["react-native" :as rn :refer (DevSettings LogBox)]
+            ["react-native" :refer (DevSettings LogBox)]
             ["react-native-languages" :default react-native-languages]
             ["react-native-shake" :as react-native-shake]))
-
-(def splash-screen (-> rn .-NativeModules .-SplashScreen))
 
 (set! interop/next-tick js/setTimeout)
 (set! batching/fake-raf #(js/setTimeout % 0))
@@ -39,7 +37,6 @@
 
   (re-frame/dispatch-sync [:init/app-started])
 
-  (.hide ^js splash-screen)
   (utils.universal-links/initialize)
 
   ;;DEV

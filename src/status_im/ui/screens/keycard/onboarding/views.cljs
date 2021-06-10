@@ -269,7 +269,8 @@
             input-word [:keycard-recovery-phrase-input-word]
             error [:keycard-recovery-phrase-confirm-error]]
     (let [{:keys [idx]} word]
-      [react/view styles/container
+      [react/keyboard-avoiding-view {:style styles/container
+                                     :ignore-offset true}
        [topbar/topbar
         {:navigation {:on-press            #(re-frame/dispatch [::keycard.onboarding/cancel-pressed])
                       :accessibility-label :cancel-keycard-setup

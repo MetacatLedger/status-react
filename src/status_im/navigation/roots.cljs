@@ -65,8 +65,7 @@
     {:bottomTabs
      {:id       :tabs-stack
       :options  (merge (default-root)
-                       {:bottomTabs {:tabsAttachMode   :afterInitialTab
-                                     :titleDisplayMode :alwaysHide
+                       {:bottomTabs {:titleDisplayMode :alwaysHide
                                      :backgroundColor  colors/white}})
       :children [;CHAT STACK
                  {:stack {:id       :chat-stack

@@ -10,14 +10,19 @@
    [status-im.ui.components.react :as react]
    [quo.components.text-input :as quo.text-input]
    [status-im.ui.components.icons.icons :as icons]
-   [quo.design-system.colors :as quo.colors]))
+   [quo.design-system.colors :as quo.colors]
+   ["react-native" :as rn]))
 
 (def debug? ^boolean js/goog.DEBUG)
 
+(def splash-screen (-> rn .-NativeModules .-SplashScreen))
+
 (defonce root-comp-id (atom nil))
+(defonce root-id (atom nil))
 (defonce pushed-screen-id (atom nil))
 (defonce curr-modal (atom nil))
 (defonce modals (atom []))
+(defonce dissmissing (atom false))
 
 ;; REGISTER COMPONENT (LAZY)
 (defn reg-comp [key]
@@ -57,24 +62,30 @@
                                                  :icon (icons/icon-source :main-icons/close)}}
                               options)))
 
-(re-frame/reg-fx
- :open-modal-fx
- (fn [comp]
-   (let [{:keys [options]} (get views/screens comp)]
-     (reset! curr-modal true)
-     (swap! modals conj comp)
-     (.showModal Navigation
-                 (clj->js {:stack {:children
-                                   [{:component
-                                     {:name    comp
-                                      :id      comp
-                                      :options (update-modal-topbar-options
-                                                (merge (roots/status-bar-options)
-                                                       (roots/default-root)
-                                                       options))}}]}})))))
+(defn open-modal [comp]
+  (let [{:keys [options]} (get views/screens comp)]
+    (if @dissmissing
+      (reset! dissmissing comp)
+      (do
+        (println "SHOW MODAL" comp)
+        (reset! curr-modal true)
+        (swap! modals conj comp)
+        (.showModal Navigation
+                    (clj->js {:stack {:children
+                                      [{:component
+                                        {:name    comp
+                                         :id      comp
+                                         :options (update-modal-topbar-options
+                                                   (merge (roots/status-bar-options)
+                                                          (roots/default-root)
+                                                          options))}}]}}))))))
+
+(re-frame/reg-fx :open-modal-fx open-modal)
 
 ;; DISSMISS MODAL
 (defn dissmissModal []
+  (println "dissmissModal" @modals)
+  (reset! dissmissing true)
   (.dismissModal Navigation (name (last @modals))))
 
 (defonce register-nav-button-reg
@@ -83,7 +94,10 @@
    (fn [^js evn]
      (let [id (.-buttonId evn)]
        (if (= "dismiss-modal" id)
-         (dissmissModal)
+         (do
+           (when-let [event (get-in views/screens [(last @modals) :on-dissmiss])]
+             (re-frame/dispatch event))
+           (dissmissModal))
          (when-let [handler (get-in views/screens [(keyword id) :right-handler])]
            (handler)))))))
 
@@ -91,8 +105,7 @@
   (.registerModalDismissedListener
    (.events Navigation)
    (fn [_]
-     (when-let [event (get-in views/screens [(last @modals) :on-dissmiss])]
-       (re-frame/dispatch event))
+     (println "DismissedListener" @dissmissing @modals)
      (if (> (count @modals) 1)
        (let [new-modals (butlast @modals)]
          (reset! modals (vec new-modals))
@@ -100,7 +113,12 @@
        (do
          (reset! modals [])
          (reset! curr-modal false)
-         (re-frame/dispatch [:set :view-id @pushed-screen-id]))))))
+         (re-frame/dispatch [:set :view-id @pushed-screen-id])))
+
+     (let [comp @dissmissing]
+       (reset! dissmissing false)
+       (when (keyword? comp)
+         (open-modal comp))))))
 
 ;; SCREEN DID APPEAR
 (defonce screen-appear-reg
@@ -129,9 +147,18 @@
 ;; SET ROOT
 (re-frame/reg-fx
  :init-root-fx
- (fn [root-id]
-   (reset! root-comp-id root-id)
-   (.setRoot Navigation (clj->js (get (roots/roots) root-id)))))
+ (fn [new-root-id]
+   (reset! root-comp-id new-root-id)
+   (reset! root-id new-root-id)
+   (.setRoot Navigation (clj->js (get (roots/roots) new-root-id)))))
+
+(defonce rset-app-launched
+  (.registerAppLaunchedListener (.events Navigation)
+                                (fn []
+                                  (when @root-id
+                                    (reset! root-comp-id @root-id)
+                                    (.setRoot Navigation (clj->js (get (roots/roots) @root-id))))
+                                  (.hide ^js splash-screen))))
 
 (defn get-screen-component [comp]
   (let [{:keys [options]} (get views/screens comp)]
@@ -214,9 +241,9 @@
                 (clj->js
                  {:component {:name    comp
                               :id      comp
-                              :options (merge (if platform/android?
-                                                {:statusBar {:translucent true}}
-                                                (roots/status-bar-options))
+                              :options (merge (cond-> (roots/status-bar-options)
+                                                platform/android?
+                                                (assoc-in [:statusBar :translucent] true))
                                               {:layout  {:componentBackgroundColor (if platform/android?
                                                                                      (:backdrop @quo.colors/theme)
                                                                                      "transparent")}

@@ -86,7 +86,7 @@
   [cofx response-js]
   (fx/merge cofx
             (handle-response cofx response-js)
-            (navigation/navigate-to-cofx :home {})))
+            (navigation/pop-to-root-tab :chat-stack)))
 
 (fx/defn joined
   {:events [::joined ::requested-to-join]}

@@ -58,12 +58,12 @@
                      :header             [buy-crypto-header]
                      :render-fn          render-on-ramp}]))
 
-(defn website [route]
+(defn website []
   (let [has-loaded? (reagent/atom false)
         {:keys [name
                 hostname
                 logo-url
-                site-url]} (get-in route [:route :params])]
+                site-url]} @(re-frame/subscribe [:get-screen-params])]
     (fn []
       ;; overflow hidden needed for the crash on android
       [react/view {:flex 1 :overflow :hidden}

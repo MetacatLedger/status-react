@@ -33,7 +33,8 @@
 
 (defn wrapped-screen-style [{:keys [insets style]} insets-obj]
   (merge
-   {:flex 1}
+   {:flex 1
+    :background-color colors/white}
    (when platform/android?
      {:border-bottom-width 1
       :border-bottom-color colors/gray-lighter})

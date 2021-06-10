@@ -215,9 +215,6 @@
                   fav-name (atom "")]
     [kb-presentation/keyboard-avoiding-view {:style {:flex 1}}
      [react/view {:flex 1}
-      #_[topbar/topbar
-         {:modal? true
-          :title  (i18n/label :t/new-favourite)}]
       [react/scroll-view {:style {:flex 1}}
        [react/view {:padding-horizontal 16}
         [react/view {:flex-direction :row :justify-content :space-between

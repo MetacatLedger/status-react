@@ -482,6 +482,7 @@
             :insets     {:bottom true}
             :component  delete-profile/delete-profile}
            {:name      :default-sync-period-settings
+            :options {:topBar {:title {:text (i18n/label :t/default-sync-period)}}}
             :component default-sync-period-settings/default-sync-period-settings}
            {:name      :anonymous-metrics-settings
             :component anonymous-metrics-settings/settings}
@@ -597,15 +598,20 @@
 
            ;[Wallet] Prepare Transaction
            {:name        :prepare-send-transaction
+            :insets      {:bottom true}
             :on-dissmiss [:wallet/cancel-transaction-command]
-            :options     {:topBar {:title {:text (i18n/label :t/send-transaction)}}}
+            :options     {:topBar {:title {:text (i18n/label :t/send-transaction)}}
+                          :swipeToDismiss false
+                          :hardwareBackButton {:dismissModalOnPress false}}
             :component   wallet/prepare-send-transaction}
 
            ;[Wallet] Request Transaction
            {:name      :request-transaction
             :insets    {:bottom true}
             :on-dissmiss [:wallet/cancel-transaction-command]
-            :options     {:topBar {:title {:text (i18n/label :t/request-transaction)}}}
+            :options     {:topBar {:title {:text (i18n/label :t/request-transaction)}}
+                          :swipeToDismiss false
+                          :hardwareBackButton {:dismissModalOnPress false}}
             :component wallet/request-transaction}
 
            ;[Wallet] Buy crypto
@@ -642,9 +648,11 @@
 
            ;KEYCARD
            {:name         :keycard-onboarding-intro
+            :insets    {:bottom true}
             :back-handler keycard.core/onboarding-intro-back-handler
             :component    keycard.onboarding/intro}
            {:name      :keycard-onboarding-puk-code
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}
                         :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
@@ -652,6 +660,7 @@
             ;;TODO dynamic
             :component keycard.onboarding/puk-code}
            {:name      :keycard-onboarding-pin
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}
                         :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
@@ -659,91 +668,106 @@
             ;;TODO dynamic
             :component keycard.onboarding/pin}
            {:name      :keycard-recovery-pair
+            :insets    {:bottom true}
             :options   {:topBar {:title {:text (i18n/label :t/step-i-of-n {:number 2 :step 1})}}
                         :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
             :component keycard.recovery/pair}
            {:name      :seed-phrase
+            :insets    {:bottom true}
             ;;TODO subtitle
             :options   {:topBar {:visible false}}
             :component key-storage.views/seed-phrase}
            {:name      :keycard-recovery-pin
+            :insets    {:bottom true}
             ;;TODO dynamic
             :options   {:topBar {:visible false}}
             :component keycard.recovery/pin}
            {:name      :keycard-wrong
+            :insets    {:bottom true}
             ;;TODO move to popover?
             :options   {:topBar {:visible false}}
             :component keycard/wrong}
            {:name      :not-keycard
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}}
             ;;TODO move to popover?
             :component keycard/not-keycard}
            {:name      :keycard-onboarding-recovery-phrase
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}
                         :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
             :component keycard.onboarding/recovery-phrase}
            {:name      :keycard-onboarding-recovery-phrase-confirm-word1
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}
                         :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
             :component keycard.onboarding/recovery-phrase-confirm-word}
            {:name      :keycard-onboarding-recovery-phrase-confirm-word2
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}
                         :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
             :component keycard.onboarding/recovery-phrase-confirm-word}
            {:name      :keycard-recovery-intro
-            :options   {:topBar {:visible false}
-                        :popGesture         false
-                        :hardwareBackButton {:dismissModalOnPress false
-                                             :popStackOnPress     false}}
+            :insets    {:bottom true}
             :component keycard.recovery/intro}
            {:name      :keycard-recovery-success
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}
                         :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
-            :insets    {:bottom true}
             :component keycard.recovery/success}
            {:name      :keycard-recovery-no-key
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}
                         :popGesture         false
                         :hardwareBackButton {:dismissModalOnPress false
                                              :popStackOnPress     false}}
             :component keycard.recovery/no-key}
            {:name      :keycard-authentication-method
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}}
             :component keycard.authentication/keycard-authentication-method}
            {:name      :keycard-login-pin
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}}
             :component keycard/login-pin}
            {:name      :keycard-blank
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}}
             :component keycard/blank}
            {:name      :keycard-unpaired
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}}
             :component keycard/unpaired}
            {:name      :keycard-settings
+            :insets    {:bottom true}
             :options {:topBar {:title {:text (i18n/label :t/status-keycard)}}}
             :component keycard.settings/keycard-settings}
            {:name      :reset-card
+            :insets    {:bottom true}
             :options {:topBar {:title {:text (i18n/label :t/reset-card)}}}
             :component keycard.settings/reset-card}
            {:name      :keycard-pin
+            :insets    {:bottom true}
             ;;TODO dynamic title
             :options   {:topBar {:visible false}}
             :component keycard.settings/reset-pin}
            {:name      :enter-pin-settings
+            :insets    {:bottom true}
             ;;TODO dynamic title
             :options   {:topBar {:visible false}}
             :component keycard.pin/enter-pin}
            {:name      :change-pairing-code
+            :insets    {:bottom true}
             ;;TODO dynamic title
             :options   {:topBar {:visible false}}
             :component keycard.pairing/change-pairing-code}
