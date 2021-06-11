@@ -184,11 +184,13 @@
   {:events [:close-chat]}
   [{:keys [db] :as cofx} target-chat-id]
   (let [chat-id (:current-chat-id db)]
-    (when (= target-chat-id chat-id)
-      (chat.state/reset-visible-item)
-      (fx/merge cofx
-                {:db (dissoc db :current-chat-id)}
-                (offload-messages chat-id)))))
+    (if (:ignore-close-chat db)
+      {:db (dissoc db :ignore-close-chat)}
+      (when (= target-chat-id chat-id)
+        (chat.state/reset-visible-item)
+        (fx/merge cofx
+                  {:db (dissoc db :current-chat-id)}
+                  (offload-messages chat-id))))))
 
 (fx/defn remove-chat
   "Removes chat completely from app, producing all necessary effects for that"
@@ -213,7 +215,7 @@
   (fx/merge cofx
             (close-chat (:current-chat-id db))
             (fn [{:keys [db]}]
-              {:db (assoc db :current-chat-id chat-id)})
+              {:db (assoc db :current-chat-id chat-id :ignore-close-chat true)})
             (preload-chat-data chat-id)
             (navigation/navigate-to-cofx :chat nil)))
 

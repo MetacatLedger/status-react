@@ -23,6 +23,7 @@
 (defn bottom-tab-general [icon accessibility]
   (merge
    {:testID accessibility
+    :accessibilityLabel accessibility
     :fontSize  11
     :icon (icons/icon-source icon)
     :badgeColor colors/blue
