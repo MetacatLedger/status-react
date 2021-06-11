@@ -58,7 +58,7 @@ class TabButton(Button):
 
 class HomeButton(TabButton):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id="selected, , tab, 1 out of 5")
+        super().__init__(driver, xpath="//*[contains(@content-desc,'tab, 1 out of 5')]")
 
     def navigate(self):
         from views.home_view import HomeView
@@ -80,7 +80,7 @@ class HomeButton(TabButton):
 
 class DappTabButton(TabButton):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id=", tab, 2 out of 5")
+        super().__init__(driver, xpath="//*[contains(@content-desc,'tab, 2 out of 5')]")
 
     def navigate(self):
         from views.dapps_view import DappsView
@@ -101,7 +101,7 @@ class DappTabButton(TabButton):
 
 class WalletButton(TabButton):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id=", tab, 3 out of 5")
+        super().__init__(driver, xpath="//*[contains(@content-desc,'tab, 3 out of 5')]")
 
     def navigate(self):
         from views.wallet_view import WalletView
@@ -115,7 +115,7 @@ class WalletButton(TabButton):
 
 class ProfileButton(TabButton):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id=", tab, 5 out of 5")
+        super().__init__(driver, xpath="//*[contains(@content-desc,'5 out of 5')]")
 
     def navigate(self):
         from views.profile_view import ProfileView
@@ -133,7 +133,7 @@ class ProfileButton(TabButton):
 
 class StatusButton(TabButton):
     def __init__(self, driver):
-        super().__init__(driver, accessibility_id=", tab, 4 out of 5")
+        super().__init__(driver, xpath="//*[contains(@content-desc,'tab, 4 out of 5')]")
 
     def navigate(self):
         from views.chat_view import ChatView
@@ -225,6 +225,7 @@ class BaseView(object):
 
         self.cross_icon = Button(self.driver, xpath="(//android.widget.ImageView[@content-desc='icon'])[1]")
         self.native_close_button = Button(self.driver, id="android:id/aerr_close")
+        self.close_button = Button(self.driver, accessibility_id="back-button")
         self.show_roots_button = Button(self.driver, accessibility_id="Show roots")
         self.get_started_button = Button(self.driver, translation_id="get-started")
         self.ok_got_it_button = Button(self.driver, translation_id="ok-got-it")
@@ -242,7 +243,7 @@ class BaseView(object):
         self.apps_button = Button(self.driver, accessibility_id="Apps")
         self.status_app_icon = Button(self.driver, translation_id="status")
         self.airplane_mode_button = AirplaneModeButton(self.driver)
-        self.enter_qr_edit_box = EnterQRcodeEditBox(self.driver)
+        self.etest_nter_qr_edit_box = EnterQRcodeEditBox(self.driver)
 
         self.element_types = {
             'base': BaseElement,

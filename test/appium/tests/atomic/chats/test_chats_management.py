@@ -106,7 +106,7 @@ class TestChatManagement(SingleDeviceTestCase):
         resolved_ens = '%s.stateofus.eth' % ens_user_ropsten['ens']
         if not chat.element_by_text(resolved_ens).is_element_displayed(10):
             self.errors.append('ENS name is not resolved after pasting chat key')
-        home.back_button.click()
+        home.close_button.click()
 
         home.just_fyi("Check that can paste public key from keyboard and start chat")
         home.join_public_chat(home.get_random_chat_name())

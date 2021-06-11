@@ -186,6 +186,13 @@ class WalletView(BaseView):
         return ' '.join([element.text for element in self.sign_in_phrase.find_elements()])
 
     def set_up_wallet(self):
+        #self.driver.info("**Setting up wallet**")
+        #phrase = self.sign_in_phrase.text
+        #self.ok_got_it_button.click()
+        #return phrase
+        pass ## Temporary for easier edit of tests
+
+    def set_up_wallet_when_sending_tx(self):
         self.driver.info("**Setting up wallet**")
         phrase = self.sign_in_phrase.text
         self.ok_got_it_button.click()
@@ -278,7 +285,9 @@ class WalletView(BaseView):
         else:
             send_transaction_view.set_recipient_address(kwargs.get('recipient'))
         if kwargs.get('sign_transaction', True):
-            send_transaction_view.sign_transaction_button.click_until_presence_of_element(send_transaction_view.network_fee_button)
+            send_transaction_view.sign_transaction_button.click()
+            if self.sign_in_phrase.is_element_displayed():
+                self.set_up_wallet_when_sending_tx()
             send_transaction_view.sign_transaction(keycard=kwargs.get('keycard', False),
                                                    default_gas_price=kwargs.get('default_gas_price', False),
                                                    sender_password=kwargs.get('sender_password', common_password))
