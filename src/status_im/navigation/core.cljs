@@ -149,7 +149,14 @@
  :init-root-fx
  (fn [new-root-id]
    (reset! root-comp-id new-root-id)
-   (reset! root-id new-root-id)
+   (reset! root-id @root-comp-id)
+   (.setRoot Navigation (clj->js (get (roots/roots) new-root-id)))))
+
+(re-frame/reg-fx
+ :init-root-with-component-fx
+ (fn [[new-root-id new-root-comp-id]]
+   (reset! root-comp-id new-root-comp-id)
+   (reset! root-id @root-comp-id)
    (.setRoot Navigation (clj->js (get (roots/roots) new-root-id)))))
 
 (defonce rset-app-launched

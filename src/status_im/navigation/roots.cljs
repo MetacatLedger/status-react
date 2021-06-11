@@ -22,7 +22,7 @@
 
 (defn bottom-tab-general [icon accessibility]
   (merge
-   {:accessibilityLabel accessibility
+   {:testID accessibility
     :fontSize  11
     :icon (icons/icon-source icon)
     :badgeColor colors/blue
@@ -139,6 +139,17 @@
                               {:component {:name    :login
                                            :id      :login
                                            :options (get-screen-options :login)}}]
+                   :options  (merge (default-root)
+                                    {:topBar (topbar-options)})}}}
+
+   :multiaccounts-keycard
+   {:root {:stack {:id       :multiaccounts-stack
+                   :children [{:component {:name    :multiaccounts
+                                           :id      :multiaccounts
+                                           :options (get-screen-options :multiaccounts)}}
+                              {:component {:name    :keycard-login-pin
+                                           :id      :keycard-login-pin
+                                           :options (get-screen-options :keycard-login-pin)}}]
                    :options  (merge (default-root)
                                     {:topBar (topbar-options)})}}}
 

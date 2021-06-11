@@ -249,6 +249,7 @@
             :after               :main-icon/next
             :disabled            (not sign-enabled?)
             :on-press            #(do
+                                    (re-frame/dispatch [:navigate-back])
                                     (re-frame/dispatch
                                      [(cond
                                         request?
@@ -256,8 +257,8 @@
                                         from-chat?
                                         :wallet.ui/sign-transaction-button-clicked-from-chat
                                         :else
-                                        :wallet.ui/sign-transaction-button-clicked) tx])
-                                    (re-frame/dispatch [:navigate-back]))}
+                                        :wallet.ui/sign-transaction-button-clicked) tx]))}
+
            (if (and (not request?) from-chat? (not to-norm))
              (i18n/label :t/wallet-send)
              (i18n/label :t/next))]}]]])))

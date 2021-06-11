@@ -775,17 +775,20 @@
            ;;KEYSTORAGE
            {:name      :actions-not-logged-in
             ;;TODO: topbar
+            :insets    {:bottom true}
             :options   {:topBar {:visible false}}
             ;;TODO move to popover?
             :component key-storage.views/actions-not-logged-in}
            {:name      :actions-logged-in
             ;;TODO: topbar
             :options   {:topBar {:visible false}}
+            :insets    {:bottom true}
             ;;TODO move to popover?
             :component key-storage.views/actions-logged-in}
            {:name      :storage
             ;;TODO: topbar
             :options   {:topBar {:visible false}}
+            :insets    {:bottom true}
             ;;TODO move to popover?
             :component key-storage.views/storage}]
 

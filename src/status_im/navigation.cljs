@@ -66,6 +66,11 @@
   [_ root-id]
   {:init-root-fx root-id})
 
+(fx/defn init-root-with-component
+  {:events [:init-root-with-component]}
+  [_ root-id comp-id]
+  {:init-root-with-component-fx [root-id comp-id]})
+
 (fx/defn rnn-navigate-to
   {:events [:rnn-navigate-to]}
   [_ key]

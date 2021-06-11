@@ -435,7 +435,7 @@
                   (assoc-in [:keycard :pin :status] nil)
                   (assoc-in [:keycard :pin :login] []))})
        #(if keycard-account?
-          {:rnn-navigate-to-fx :keycard-login-pin}
+          {:init-root-with-component-fx [:multiaccounts-keycard :multiaccounts]}
           {:init-root-fx :multiaccounts})))))
 
 (fx/defn get-credentials
@@ -532,11 +532,12 @@
   [{:keys [db] :as cofx} key-uid]
   ;; We specifically pass a bunch of fields instead of the whole multiaccount
   ;; as we want store some fields in multiaccount that are not here
-  (let [multiaccount (get-in db [:multiaccounts/multiaccounts key-uid])]
+  (let [multiaccount (get-in db [:multiaccounts/multiaccounts key-uid])
+        keycard-multiaccount? (boolean (:keycard-pairing multiaccount))]
     (fx/merge
      cofx
      {:db (update db :keycard dissoc :application-info)
-      :rnn-navigate-to-fx :login}
+      :rnn-navigate-to-fx (if keycard-multiaccount? :keycard-login-pin :login)}
      (open-login (select-keys multiaccount [:key-uid :name :public-key :identicon :images])))))
 
 (fx/defn hide-keycard-banner
